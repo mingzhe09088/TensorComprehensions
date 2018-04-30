@@ -69,7 +69,7 @@ struct PolyhedralMapperTest : public ::testing::Test {
   }
 
   static CudaMappingOptions DefaultOptions() {
-    return CudaMappingOptions::makeNaiveCudaMappingOptions();
+    return CudaMappingOptions::makeNaiveMappingOptions();
   }
 
   std::unique_ptr<MappedScop> TileAndMapThreads(
@@ -444,7 +444,7 @@ TEST_F(PolyhedralMapperTest, Unroll2D) {
 }
 
 /*
- * Map 1D code to 2D grid (set up by makeNaiveCudaMappingOptions()) and
+ * Map 1D code to 2D grid (set up by makeNaiveMappingOptions()) and
  * check that the code is pinned to one particular value of
  * block identifier b1 and thread identifier t1.
  */
