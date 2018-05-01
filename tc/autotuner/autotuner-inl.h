@@ -301,7 +301,7 @@ void TuningHarness<Backend>::runOneIteration(
   }
 
   // At this point everything is synchronized because out of scope, done
-  if (FLAGS_debug_tuner) {
+  if (FLAGS_debug_tuner || FLAGS_tuner_print_best) {
     LOG(INFO) << "[TUNER][ITERATION LOG] best option so far:";
     std::stringstream ssInfo;
     typename Backend::MappingOptionsCppPrinter infoPrinter(ssInfo);
