@@ -23,32 +23,31 @@ namespace tc {
 
 class CpuMappingOptions {
  private:
-  inline CpuMappingOptions();
-  static inline CpuMappingOptions makeUnmappedMappingOptions();
+  CpuMappingOptions();
+  static CpuMappingOptions makeUnmappedMappingOptions();
 
  public:
   /// Construct a deep copy of the options.
-  inline CpuMappingOptions(const CpuMappingOptions& options);
-  inline explicit CpuMappingOptions(const CpuMappingOptionsProto& buf);
-  inline CpuMappingOptions& operator=(const CpuMappingOptions& options);
+  CpuMappingOptions(const CpuMappingOptions& options);
+  explicit CpuMappingOptions(const CpuMappingOptionsProto& buf);
+  CpuMappingOptions& operator=(const CpuMappingOptions& options);
 
   /// Compare with another message.
-  inline bool operator==(const CpuMappingOptions& options) const;
-  inline bool operator!=(const CpuMappingOptions& options) const;
+  bool operator==(const CpuMappingOptions& options) const;
+  bool operator!=(const CpuMappingOptions& options) const;
 
   /// Construct from a serialized protocol buffer message.
-  inline explicit CpuMappingOptions(const std::string& str);
+  explicit CpuMappingOptions(const std::string& str);
 
-  inline std::string toProtobufSerializedString() const;
+  std::string toProtobufSerializedString() const;
 
   /// Set mappings
-  inline CpuMappingOptions& genericMappingOptions(
-      const MappingOptions& options);
+  CpuMappingOptions& genericMappingOptions(const MappingOptions& options);
   ///@}
 
   /// Static constructors for predefined strategies.
   ///@{
-  static inline CpuMappingOptions makeNaiveMappingOptions();
+  static CpuMappingOptions makeNaiveMappingOptions();
   ///@}
 
   const CpuMappingOptionsProto& proto() const {
@@ -84,5 +83,3 @@ class CpuMappingOptions {
   MappingOptionsView generic;
 };
 } // namespace tc
-
-#include "tc/core/cpu/cpu_mapping_options-inl.h"

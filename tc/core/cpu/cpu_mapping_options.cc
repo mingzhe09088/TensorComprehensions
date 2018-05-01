@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-
 #include "tc/core/cpu/cpu_mapping_options.h"
+
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <tuple>
+#include <type_traits>
+
+#include "tc/proto/mapping_options.pb.h"
+
+#include "tc/core/cpu/cpu_mapping_options_cpp_printer.h"
+#include "tc/core/flags.h"
+#include "tc/core/utils/string.h"
+#include "tc/external/isl.h"
 
 namespace tc {
 
