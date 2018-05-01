@@ -459,8 +459,8 @@ def fun(float(N) I) -> (O) {
       std::move(scop), DefaultOptions());
   auto codeAndLaunchBounds = mscop->codegen(specializedName);
   USING_MAPPING_SHORT_NAMES(BX, BY, BZ, TX, TY, TZ);
-  EXPECT_EQ(1u, BY.mappingSize(std::get<1>(codeAndLaunchBounds).view));
-  EXPECT_EQ(1u, TY.mappingSize(std::get<1>(codeAndLaunchBounds).view));
+  EXPECT_EQ(1u, mappingSize(BY, std::get<1>(codeAndLaunchBounds).view));
+  EXPECT_EQ(1u, mappingSize(TY, std::get<1>(codeAndLaunchBounds).view));
 }
 
 /*

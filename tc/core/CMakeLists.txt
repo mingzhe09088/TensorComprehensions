@@ -95,7 +95,6 @@ set(TC_CUDA_CROSS_COMPILE_FILES
     cuda/cuda_mapping_options_cpp_printer.cc
     polyhedral/cuda/codegen.cc
     polyhedral/cuda/mapped_scop.cc
-    polyhedral/cuda/mapping_types.cc
     polyhedral/cuda/memory_promotion_heuristic.cc
     polyhedral/cuda/tighten_launch_bounds.cc
 )

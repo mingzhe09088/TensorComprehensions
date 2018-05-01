@@ -101,7 +101,7 @@ class TcExecutor {
   template <typename T>
   void checkSizesAndStridesAreCompliant(
       const std::vector<T*>& dlTensors,
-      const std::vector<DLTensorUPtr>& tensorInfos,
+      const std::vector<dlutils::DLTensorUPtr>& tensorInfos,
       const lang::ListView<lang::Param>& dbgInfo) const;
 
   void checkInputsCompliant(
@@ -131,7 +131,7 @@ class TcExecutor {
 template <typename T>
 void TcExecutor::checkSizesAndStridesAreCompliant(
     const std::vector<T*>& dlTensors,
-    const std::vector<DLTensorUPtr>& tensorInfos,
+    const std::vector<dlutils::DLTensorUPtr>& tensorInfos,
     const lang::ListView<lang::Param>& dbgInfo) const {
   if (tensorInfos.size() != dlTensors.size()) {
     throw lang::ErrorReport(dbgInfo)

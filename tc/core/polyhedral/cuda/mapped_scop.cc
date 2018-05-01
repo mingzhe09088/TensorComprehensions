@@ -27,11 +27,11 @@
 #include "tc/core/gpu.h"
 #include "tc/core/libraries.h"
 #include "tc/core/polyhedral/cuda/codegen.h"
-#include "tc/core/polyhedral/cuda/mapping_types.h"
 #include "tc/core/polyhedral/cuda/memory_promotion_heuristic.h"
 #include "tc/core/polyhedral/cuda/tighten_launch_bounds.h"
 #include "tc/core/polyhedral/exceptions.h"
 #include "tc/core/polyhedral/functional.h"
+#include "tc/core/polyhedral/mapping_types.h"
 #include "tc/core/polyhedral/schedule_transforms.h"
 #include "tc/core/polyhedral/schedule_tree_matcher.h"
 #include "tc/core/polyhedral/scop.h"
@@ -545,12 +545,12 @@ void MappedScop::insertMappingContext() {
   const Block& block = numThreads;
   USING_MAPPING_SHORT_NAMES(BX, BY, BZ, TX, TY, TZ);
   std::unordered_map<isl::id, size_t, isl::IslIdIslHash> mappingIdsWithSizes{
-      {BX, BX.mappingSize(grid)},
-      {BY, BY.mappingSize(grid)},
-      {BZ, BZ.mappingSize(grid)},
-      {TX, TX.mappingSize(block)},
-      {TY, TY.mappingSize(block)},
-      {TZ, TZ.mappingSize(block)}};
+      {BX, mappingSize(BX, grid)},
+      {BY, mappingSize(BY, grid)},
+      {BZ, mappingSize(BZ, grid)},
+      {TX, mappingSize(TX, block)},
+      {TY, mappingSize(TY, block)},
+      {TZ, mappingSize(TZ, block)}};
   auto space = scop.domain().universe().get_space();
   auto mappingContext = makeParameterContext(
       space, mappingIdsWithSizes.begin(), mappingIdsWithSizes.end());

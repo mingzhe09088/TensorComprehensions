@@ -228,11 +228,11 @@ bool GeneticTunerHarness::warmupOrPrune(
         CHECK(exec);
         USING_MAPPING_SHORT_NAMES(BX, BY, BZ, TX, TY, TZ);
         auto block = static_cast<const CudaTcExecutor*>(exec)->block;
-        auto nThreads = TX.mappingSize(block) * TY.mappingSize(block) *
-            TZ.mappingSize(block);
+        auto nThreads = mappingSize(TX, block) * mappingSize(TY, block) *
+            mappingSize(TZ, block);
         auto grid = static_cast<const CudaTcExecutor*>(exec)->grid;
-        auto nBlocks =
-            BX.mappingSize(grid) * BY.mappingSize(grid) * BZ.mappingSize(grid);
+        auto nBlocks = mappingSize(BX, grid) * mappingSize(BY, grid) *
+            mappingSize(BZ, grid);
         if (nBlocks * nThreads < minThreads) {
           if (debugTuner) {
             std::stringstream ssInfo;

@@ -14,11 +14,64 @@
  * limitations under the License.
  */
 #include "tc/core/polyhedral/mapping_types.h"
-#include "tc/core/polyhedral/cuda/mapping_types.h"
+
+#include "tc/external/isl.h"
 
 namespace tc {
 namespace polyhedral {
 namespace mapping {
+ThreadId ThreadId::makeId(size_t dim) {
+  CHECK(dim < 3);
+  if (dim == 0) {
+    return ThreadId::x();
+  }
+  if (dim == 1) {
+    return ThreadId::y();
+  }
+  return ThreadId::z();
+}
+ThreadId ThreadId::x() {
+  static thread_local isl::id x(
+      isl::with_exceptions::globalIslCtx(), std::string("t0"));
+  return makeId<0>(x);
+}
+ThreadId ThreadId::y() {
+  static thread_local isl::id y(
+      isl::with_exceptions::globalIslCtx(), std::string("t1"));
+  return makeId<1>(y);
+}
+ThreadId ThreadId::z() {
+  static thread_local isl::id z(
+      isl::with_exceptions::globalIslCtx(), std::string("t2"));
+  return makeId<2>(z);
+}
+
+BlockId BlockId::makeId(size_t dim) {
+  CHECK(dim < 3);
+  if (dim == 0) {
+    return BlockId::x();
+  }
+  if (dim == 1) {
+    return BlockId::y();
+  }
+  return BlockId::z();
+}
+BlockId BlockId::x() {
+  static thread_local isl::id x(
+      isl::with_exceptions::globalIslCtx(), std::string("b0"));
+  return makeId<0>(x);
+}
+BlockId BlockId::y() {
+  static thread_local isl::id y(
+      isl::with_exceptions::globalIslCtx(), std::string("b1"));
+  return makeId<1>(y);
+}
+BlockId BlockId::z() {
+  static thread_local isl::id z(
+      isl::with_exceptions::globalIslCtx(), std::string("b2"));
+  return makeId<2>(z);
+}
+
 bool MappingId::isBlockId() {
   return *this == BlockId::x() or *this == BlockId::y() or
       *this == BlockId::z();

@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "tc/core/polyhedral/cuda/mapping_types.h"
-
-#include "tc/core/cuda/cuda_mapping_options.h"
+#pragma once
 
 namespace tc {
 namespace polyhedral {
 namespace mapping {
-size_t ThreadId::mappingSize(const Block& vals) const {
-  if (vals.view.size() > dim) {
-    return vals.view[static_cast<size_t>(dim)];
-  }
-  return MappingId::unmapped;
+template <unsigned char Dim>
+ThreadId ThreadId::makeId(isl::id id) {
+  static_assert(Dim < kMaxDim, "Incorrect Dim >= kMaxDim");
+  return ThreadId(id, Dim);
 }
-
-size_t BlockId::mappingSize(const Grid& vals) const {
-  if (vals.view.size() > dim) {
-    return vals.view[static_cast<size_t>(dim)];
-  }
-  return MappingId::unmapped;
+template <unsigned char Dim>
+BlockId BlockId::makeId(isl::id id) {
+  static_assert(Dim < kMaxDim, "Incorrect Dim >= kMaxDim");
+  return BlockId(id, Dim);
 }
 } // namespace mapping
 } // namespace polyhedral

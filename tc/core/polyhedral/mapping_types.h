@@ -58,6 +58,70 @@ struct MappingId : public isl::id {
     }
   };
 };
+
+// Note: do not add members to ThreadId or slicing will ensue.
+// We use containers of MappingId. This makes sense because of isl::id
+// semantics and the fact that a MappingId **isa** isl::id.
+struct BlockId : public MappingId {
+ public:
+  BlockId(isl::id id, unsigned char l) : MappingId(id, l) {}
+  static BlockId makeId(size_t dim);
+  template <unsigned char Dim>
+  static BlockId makeId(isl::id id);
+
+  static constexpr unsigned char kMaxDim = 3;
+
+  static BlockId x();
+  static BlockId y();
+  static BlockId z();
+
+  struct Hash {
+    size_t operator()(const BlockId& id) const {
+      return isl::IslIdIslHash().operator()(id);
+    }
+  };
+};
+
+// Note: do not add members to ThreadId or slicing will ensue.
+// We use containers of MappingId. This makes sense because of isl::id
+// semantics and the fact that a MappingId **isa** isl::id.
+struct ThreadId : public MappingId {
+ public:
+  ThreadId(isl::id id, unsigned char l) : MappingId(id, l) {}
+  static ThreadId makeId(size_t dim);
+  template <unsigned char Dim>
+  static ThreadId makeId(isl::id id);
+
+  static constexpr unsigned char kMaxDim = 3;
+
+  static ThreadId x();
+  static ThreadId y();
+  static ThreadId z();
+
+  struct Hash {
+    size_t operator()(const ThreadId& id) const {
+      return isl::IslIdIslHash().operator()(id);
+    }
+  };
+};
+
+#define USING_MAPPING_SHORT_NAMES(BX, BY, BZ, TX, TY, TZ) \
+  using namespace tc::polyhedral::mapping;                \
+  auto BX = BlockId::x();                                 \
+  (void)BX;                                               \
+  auto BY = BlockId::y();                                 \
+  (void)BY;                                               \
+  auto BZ = BlockId::z();                                 \
+  (void)BZ;                                               \
+  auto TX = ThreadId::x();                                \
+  (void)TX;                                               \
+  auto TY = ThreadId::y();                                \
+  (void)TY;                                               \
+  auto TZ = ThreadId::z();                                \
+  (void)TZ;
+
 } // namespace mapping
 } // namespace polyhedral
 } // namespace tc
+
+#include "tc/core/polyhedral/mapping_types-inl.h"
