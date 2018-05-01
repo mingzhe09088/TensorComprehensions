@@ -21,13 +21,13 @@
 #include <glog/logging.h>
 #include <gtest/gtest.h>
 
-#include <ATen/ATen.h>
+#include "tc/aten/aten.h"
 
 #include "tc/aten/aten_compiler.h"
 #include "tc/core/cuda/cuda_mapping_options.h"
 
+#include "../test/cuda/test_harness_aten_cuda.h"
 #include "../test/test_harness.h"
-#include "../test/test_harness_aten_cuda.h"
 #include "benchmark_fixture.h"
 
 #include "tc/c2/context.h"
@@ -99,7 +99,6 @@ def tmm(float(M,K) A, float(N,K) B) -> (C) {
           "tmm",
           inputs,
           options,
-          {options},
           checkFun);
     }
   }

@@ -20,3 +20,5 @@ tensor_comprehensions/version.py
 tensor_comprehensions/*.proto
 slurm-*
 examples/results*
+tensor_comprehensions/__init__.pyc
+test_python/tc_test/*

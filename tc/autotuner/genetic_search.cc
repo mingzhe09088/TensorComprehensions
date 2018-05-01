@@ -157,13 +157,15 @@ void restoreRngState(RNG& rng) {
 
 GeneticSearch::GeneticSearch(
     const std::vector<TuningConfiguration>& confs,
-    size_t n,
+    size_t numGenerations,
+    size_t populationSize,
     uint8_t crossOverRate,
     uint8_t mutationRate,
     size_t numberElites)
     : population(),
       lastBestConf(confs[0]),
-      kMaxPopulationSize(n),
+      kNumGenerations(numGenerations),
+      kMaxPopulationSize(populationSize),
       kCrossOverRate(crossOverRate),
       kMutationRate(mutationRate),
       kNumberElites(numberElites),
@@ -171,7 +173,8 @@ GeneticSearch::GeneticSearch(
   restoreRngState(rng);
   VALIDATE();
   CHECK(not confs.empty()) << "empty set of predefined configurations";
-  CHECK_LE(confs.size(), n) << "too many predefined configurations";
+  CHECK_LE(confs.size(), populationSize)
+      << "too many predefined configurations";
 
   population.reserve(confs.size());
   for (auto& c : confs) {
@@ -185,27 +188,6 @@ GeneticSearch::GeneticSearch(
     }
     randomizePopulation(population.begin() + oldSize, population.end(), rng);
   }
-}
-
-GeneticSearch::GeneticSearch(
-    const TuningConfiguration& conf,
-    size_t n,
-    uint8_t crossOverRate,
-    uint8_t mutationRate,
-    size_t numberElites)
-    : population(),
-      lastBestConf(conf),
-      kMaxPopulationSize(n),
-      kCrossOverRate(crossOverRate),
-      kMutationRate(mutationRate),
-      kNumberElites(numberElites),
-      rng{std::random_device{}()} {
-  restoreRngState(rng);
-  VALIDATE();
-  for (size_t i = 0; i < kMaxPopulationSize; ++i) {
-    population.emplace_back(make_unique<CandidateConfiguration>(conf));
-  }
-  randomizePopulation(population.begin(), population.end(), rng);
 }
 
 TuningConfiguration GeneticSearch::crossover(
@@ -255,7 +237,7 @@ void GeneticSearch::breed() {
         make_unique<CandidateConfiguration>(p->configuration));
   }
 
-  auto select = [&]() -> TuningConfiguration& {
+  auto select = [&]() -> const TuningConfiguration& {
     auto limit = std::uniform_real_distribution<double>{}(rng);
     auto lb = std::lower_bound(accFitness.begin(), accFitness.end(), limit);
     return population.at(std::distance(accFitness.begin(), lb))->configuration;

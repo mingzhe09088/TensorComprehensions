@@ -78,7 +78,7 @@ ATenAutotuner<Backend, Search>::tune(
   for (auto device : devices) {
     typename Backend::WithDevice wd(device);
     auto deviceInputs = cloneTensors(inputs);
-    inputsPerDevice.emplace(device, toDLConstTensors(deviceInputs));
+    inputsPerDevice.emplace(device, makeDLConstTensors(deviceInputs));
     rawInputsPerDevice.emplace(
         device, extractRawPtrs(inputsPerDevice.at(device)));
     auto deviceOutputs = cloneTensors(outputs);

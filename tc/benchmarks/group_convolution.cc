@@ -21,13 +21,13 @@
 #include <glog/logging.h>
 #include <gtest/gtest.h>
 
-#include <ATen/ATen.h>
+#include "tc/aten/aten.h"
 
 #include "tc/aten/aten_compiler.h"
 #include "tc/core/cuda/cuda_mapping_options.h"
 
+#include "../test/cuda/test_harness_aten_cuda.h"
 #include "../test/test_harness.h"
-#include "../test/test_harness_aten_cuda.h"
 #include "benchmark_fixture.h"
 
 #include "tc/c2/context.h"
@@ -158,7 +158,6 @@ def group_convolution(float(N,G,C,H,W) I, float(G,F,C,KH,KW) W1, float(G,F) B)
           "group_convolution",
           inputs,
           options,
-          {options},
           checkFun);
     }
   }

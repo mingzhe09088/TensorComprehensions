@@ -348,7 +348,7 @@ void storeCaches(
     std::cout << "No filepath provided, not saving cache" << std::endl;
   } else {
     std::cout << "Dumping cache to " << tc::makeOptionsFilename(cacheFilename)
-              << "/" << Backend::makeDeviceFilename(cacheFilename) << std::endl;
+              << std::endl;
     optionsCache->pruneKeepTopK(10);
     optionsCache->storeCacheToFile(tc::makeOptionsFilename(cacheFilename));
     optionsCache->pruneKeepTopK(1);

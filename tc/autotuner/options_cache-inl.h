@@ -164,6 +164,8 @@ void OptionsCache<Backend>::loadCacheFromFile(const std::string& filename) {
 template <typename Backend>
 void OptionsCache<Backend>::storeCacheToFile(
     const std::string& filename) const {
+  // toProtobuf() takes the lock too, get a copy of the result first
+  auto proto = toProtobuf();
   std::lock_guard<std::mutex> lock(mutex);
   std::fstream serialized(
       filename, std::ios::binary | std::ios::trunc | std::ios::out);
@@ -171,7 +173,7 @@ void OptionsCache<Backend>::storeCacheToFile(
     LOG(ERROR) << "Failed to open the output stream for dumping protobuf: "
                << filename;
   } else {
-    toProtobuf().SerializePartialToOstream(&serialized);
+    proto.SerializePartialToOstream(&serialized);
   }
 }
 

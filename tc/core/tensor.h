@@ -89,6 +89,8 @@ struct TensorInfo {
       const std::vector<int64_t>& strides);
   explicit TensorInfo(const DLTensor* t);
   explicit TensorInfo(const DLConstTensor* t);
+  explicit TensorInfo(const DLTensorUPtr& t);
+  explicit TensorInfo(const DLConstTensorUPtr& t);
   explicit TensorInfo(const TensorInfoProto& buf);
 
   bool operator==(const TensorInfo& t) const;

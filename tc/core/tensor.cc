@@ -56,12 +56,16 @@ TensorInfo::TensorInfo(const DLTensor* t)
           detail::toIntVector(t->shape, t->ndim),
           detail::toIntVector(t->strides, t->ndim)) {}
 
+TensorInfo::TensorInfo(const DLTensorUPtr& ptr) : TensorInfo(ptr.get()) {}
+
 TensorInfo::TensorInfo(const DLConstTensor* t)
     : TensorInfo(
           t->dtype,
           detail::getDLTensorAlignment(t),
           detail::toIntVector(t->shape, t->ndim),
           detail::toIntVector(t->strides, t->ndim)) {}
+
+TensorInfo::TensorInfo(const DLConstTensorUPtr& ptr) : TensorInfo(ptr.get()) {}
 
 TensorInfo::TensorInfo(const TensorInfoProto& buf)
     : dtype{static_cast<uint8_t>(buf.dtype().code()),
