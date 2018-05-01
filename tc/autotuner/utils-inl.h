@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 #pragma once
+
 #include <algorithm>
 #include <iterator>
 #include <type_traits>
 #include <vector>
+
+#include "tc/core/utils/math.h"
 
 namespace tc {
 namespace autotune {
