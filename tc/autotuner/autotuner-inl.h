@@ -355,17 +355,6 @@ void storeCaches(
   }
 }
 
-std::vector<size_t> filterHigherThan(
-    const std::vector<size_t>& v,
-    size_t limit) {
-  std::vector<size_t> newV;
-  std::copy_if(
-      v.begin(), v.end(), std::back_inserter(newV), [limit](size_t val) {
-        return val <= limit;
-      });
-  return newV;
-}
-
 void removeDuplicates(std::vector<size_t>& v) {
   std::sort(v.begin(), v.end());
   v.erase(std::unique(v.begin(), v.end()), v.end());
