@@ -43,19 +43,10 @@ class CpuMappingOptionsCppPrinter : public MappingOptionsCppPrinter {
       const CpuMappingOptions& options);
 };
 
-inline CpuMappingOptionsCppPrinter& operator<<(
+CpuMappingOptionsCppPrinter& operator<<(
     CpuMappingOptionsCppPrinter& prn,
-    const CpuMappingOptions& options) {
-  prn.print(options.generic);
-  prn.endStmt();
-  return prn;
-}
+    const CpuMappingOptions& options);
 
-inline std::ostream& operator<<(
-    std::ostream& out,
-    const CpuMappingOptionsAsCpp& mo) {
-  auto prn = CpuMappingOptionsCppPrinter(out, mo.indent);
-  prn << mo.options;
-  return out;
-}
+std::ostream& operator<<(std::ostream& out, const CpuMappingOptionsAsCpp& mo);
+
 } // namespace tc
